@@ -7,8 +7,8 @@ from pathlib import Path
 from typing import Any
 
 from archivist.adapters import get_adapter
-from archivist.config import CorpusConfig, GlobalConfig, SourceConfig
-from archivist.models import Chunk, DocumentContent
+from archivist.config import CorpusConfig, GlobalConfig
+from archivist.models import Chunk
 from archivist.processors.chunker import chunk_text
 from archivist.stores.chromadb import ChromaDBStore
 
@@ -70,7 +70,7 @@ def sync_corpus(
         )
 
         adapter_cls = get_adapter(source_config.type)
-        adapter = adapter_cls(
+        adapter = adapter_cls(  # type: ignore[call-arg]
             source_config=source_config,
             corpus_slug=slug,
             data_dir=data_dir,
@@ -157,4 +157,4 @@ def _generate_embeddings(
 
     model = SentenceTransformer(model_name)
     embeddings = model.encode(texts, show_progress_bar=True)
-    return embeddings.tolist()
+    return list(embeddings.tolist())

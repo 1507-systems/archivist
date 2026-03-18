@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from archivist.models import Chunk
 
 
@@ -11,7 +13,7 @@ def chunk_text(
     *,
     chunk_size: int = 3200,
     chunk_overlap: int = 400,
-    metadata: dict | None = None,
+    metadata: dict[str, Any] | None = None,
 ) -> list[Chunk]:
     """Split text into overlapping chunks, preferring paragraph boundaries.
 

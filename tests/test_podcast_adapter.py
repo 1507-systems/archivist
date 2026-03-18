@@ -52,7 +52,9 @@ class TestPodcastAdapterDiscover:
         assert 2 in ep_nums
         assert 1 in ep_nums
 
-    def test_discover_extracts_audio_urls(self, adapter: PodcastAdapter, fixtures_dir: Path) -> None:
+    def test_discover_extracts_audio_urls(
+        self, adapter: PodcastAdapter, fixtures_dir: Path,
+    ) -> None:
         feed_xml = (fixtures_dir / "sample_feed.xml").read_text()
         import feedparser
         parsed = feedparser.parse(feed_xml)

@@ -9,7 +9,6 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, Field, field_validator
 
-
 # -- Directory resolution --
 
 def get_config_dir() -> Path:

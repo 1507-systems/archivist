@@ -12,7 +12,6 @@ from pydantic import BaseModel, Field
 from archivist.config import GlobalConfig, load_all_corpora
 from archivist.stores.chromadb import ChromaDBStore
 
-
 # -- Request/Response models --
 
 class SearchRequest(BaseModel):

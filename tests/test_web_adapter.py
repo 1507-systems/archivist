@@ -24,8 +24,12 @@ class TestURLFiltering:
         include_re = [re.compile(p) for p in config.include_patterns]
         exclude_re = [re.compile(p) for p in config.exclude_patterns]
 
-        assert adapter._url_matches_filters("https://example.com/docs/page", include_re, exclude_re)
-        assert not adapter._url_matches_filters("https://example.com/blog/post", include_re, exclude_re)
+        assert adapter._url_matches_filters(
+            "https://example.com/docs/page", include_re, exclude_re,
+        )
+        assert not adapter._url_matches_filters(
+            "https://example.com/blog/post", include_re, exclude_re,
+        )
 
     def test_url_matches_exclude(self) -> None:
         from pathlib import Path
@@ -40,7 +44,9 @@ class TestURLFiltering:
         include_re = [re.compile(p) for p in config.include_patterns]
         exclude_re = [re.compile(p) for p in config.exclude_patterns]
 
-        assert not adapter._url_matches_filters("https://example.com/api/v1", include_re, exclude_re)
+        assert not adapter._url_matches_filters(
+            "https://example.com/api/v1", include_re, exclude_re,
+        )
         assert adapter._url_matches_filters("https://example.com/page", include_re, exclude_re)
 
 
@@ -77,7 +83,8 @@ class TestURLToSlug:
 
         config = SourceConfig(type="web", url="https://example.com")
         adapter = WebAdapter(config, "test", Path("/tmp/test"))
-        assert adapter._url_to_slug("https://example.com/docs/getting-started") == "docs-getting-started"
+        slug = adapter._url_to_slug("https://example.com/docs/getting-started")
+        assert slug == "docs-getting-started"
 
     def test_root_url(self) -> None:
         from pathlib import Path

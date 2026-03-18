@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 import re
 from abc import ABC, abstractmethod
-from html.parser import HTMLParser
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -59,19 +58,19 @@ class PDFExtractor(TextExtractor):
         import pymupdf
 
         if isinstance(content, (str, Path)):
-            doc = pymupdf.open(str(content))
+            doc = pymupdf.open(str(content))  # type: ignore[no-untyped-call]
         elif isinstance(content, bytes):
-            doc = pymupdf.open(stream=content, filetype="pdf")
+            doc = pymupdf.open(stream=content, filetype="pdf")  # type: ignore[no-untyped-call]
         else:
             msg = f"PDFExtractor expects a file path or bytes, got {type(content)}"
             raise TypeError(msg)
 
         pages = []
-        for page in doc:
+        for page in doc:  # type: ignore[attr-defined]
             text = page.get_text()
             if text.strip():
                 pages.append(text)
-        doc.close()
+        doc.close()  # type: ignore[no-untyped-call]
         return "\n\n".join(pages)
 
 

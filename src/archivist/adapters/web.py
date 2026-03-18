@@ -211,8 +211,8 @@ class WebAdapter(SourceAdapter):
 
         soup = BeautifulSoup(html, "html.parser")
         title_tag = soup.find("title")
-        if title_tag and title_tag.string:
-            return title_tag.string.strip()
+        if title_tag and hasattr(title_tag, "string") and title_tag.string:
+            return str(title_tag.string).strip()
         return None
 
     def _url_matches_filters(
@@ -224,9 +224,7 @@ class WebAdapter(SourceAdapter):
         """Check if URL passes include/exclude filters."""
         if exclude and any(p.search(url) for p in exclude):
             return False
-        if include and not any(p.search(url) for p in include):
-            return False
-        return True
+        return not (include and not any(p.search(url) for p in include))
 
     def _normalize_url(self, url: str) -> str:
         """Normalize a URL for deduplication."""

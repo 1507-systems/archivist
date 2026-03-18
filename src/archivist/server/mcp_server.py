@@ -64,7 +64,7 @@ def run_mcp_server(
     model_name = global_config.defaults.embedding_model
     corpora = load_all_corpora(config_dir)
 
-    @server.list_tools()
+    @server.list_tools()  # type: ignore[no-untyped-call,untyped-decorator]
     async def list_tools() -> list[Tool]:
         return [
             Tool(
@@ -119,7 +119,7 @@ def run_mcp_server(
             ),
         ]
 
-    @server.call_tool()
+    @server.call_tool()  # type: ignore[untyped-decorator]
     async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
         if name == "search_corpus":
             return _handle_search(arguments, config_dir, data_dir, model_name)
@@ -144,11 +144,10 @@ async def _run_stdio(server: Server) -> None:
 
 def _run_sse(server: Server, host: str, port: int) -> None:
     """Run the MCP server over SSE (HTTP)."""
+    import uvicorn
     from mcp.server.sse import SseServerTransport
     from starlette.applications import Starlette
     from starlette.routing import Route
-
-    import uvicorn
 
     sse = SseServerTransport("/messages/")
 

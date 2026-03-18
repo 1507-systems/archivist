@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import re
 import time
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -238,9 +239,12 @@ class PodcastAdapter(SourceAdapter):
 
         return None
 
-    def _parse_date(self, entry: Any) -> None:
-        """Parse published date from feed entry (returns None for now — feedparser provides
-        time_struct which needs conversion, deferred to avoid complexity)."""
+    def _parse_date(self, entry: Any) -> datetime | None:
+        """Parse published date from feed entry.
+
+        Returns None for now — feedparser provides time_struct which needs
+        conversion, deferred to avoid complexity in v0.1.
+        """
         return None
 
     def _make_slug(self, entry: Any, index: int) -> str:

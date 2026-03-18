@@ -53,9 +53,9 @@ class ChromaDBStore(VectorStore):
 
             self._collection.upsert(
                 ids=ids,
-                embeddings=batch_embeddings,
+                embeddings=batch_embeddings,  # type: ignore[arg-type]
                 documents=documents,
-                metadatas=metadatas,
+                metadatas=metadatas,  # type: ignore[arg-type]
             )
 
         logger.info("Upserted %d chunks into collection '%s'", len(chunks), self._collection_name)
@@ -69,7 +69,7 @@ class ChromaDBStore(VectorStore):
         """Search for similar chunks using cosine similarity."""
         where = filters if filters else None
         results = self._collection.query(
-            query_embeddings=[query_embedding],
+            query_embeddings=[query_embedding],  # type: ignore[arg-type]
             n_results=n_results,
             where=where,
             include=["documents", "metadatas", "distances"],
@@ -84,9 +84,10 @@ class ChromaDBStore(VectorStore):
             distance = results["distances"][0][i] if results["distances"] else 0.0
             similarity = 1.0 - distance
 
-            metadata = results["metadatas"][0][i] if results["metadatas"] else {}
-            document_id = metadata.get("document_id", "")
-            text = results["documents"][0][i] if results["documents"] else ""
+            raw_meta = results["metadatas"][0][i] if results["metadatas"] else {}
+            metadata: dict[str, Any] = dict(raw_meta)
+            document_id = str(metadata.get("document_id", ""))
+            text = str(results["documents"][0][i]) if results["documents"] else ""
 
             search_results.append(
                 SearchResult(
@@ -124,7 +125,7 @@ class ChromaDBStore(VectorStore):
             for meta in batch["metadatas"]:
                 doc_id = meta.get("document_id")
                 if doc_id:
-                    document_ids.add(doc_id)
+                    document_ids.add(str(doc_id))
             offset += BATCH_SIZE
 
         return document_ids

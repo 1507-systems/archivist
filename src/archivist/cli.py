@@ -145,7 +145,8 @@ def sync(ctx: click.Context, name: str | None) -> None:
 
     if name:
         if name not in corpora:
-            console.print(f"[red]Corpus '{name}' not found. Available: {list(corpora.keys())}[/red]")
+            available = list(corpora.keys())
+            console.print(f"[red]Corpus '{name}' not found. Available: {available}[/red]")
             raise SystemExit(1)
         targets = {name: corpora[name]}
     else:
@@ -188,9 +189,9 @@ def search(ctx: click.Context, query: str, corpus: str | None, num_results: int)
     targets = {corpus: corpora[corpus]} if corpus else corpora
 
     # Lazy import to avoid loading ML models until needed
-    from archivist.stores.chromadb import ChromaDBStore
-
     from sentence_transformers import SentenceTransformer
+
+    from archivist.stores.chromadb import ChromaDBStore
 
     model_name = global_config.defaults.embedding_model
     console.print(f"Loading embedding model: {model_name}...")
@@ -198,7 +199,7 @@ def search(ctx: click.Context, query: str, corpus: str | None, num_results: int)
     query_embedding = model.encode(query).tolist()
 
     all_results = []
-    for slug, corpus_config in targets.items():
+    for slug, _corpus_config in targets.items():
         store = ChromaDBStore(
             collection_name=slug,
             persist_dir=data_dir / slug / "vectordb",
@@ -320,9 +321,9 @@ def serve(ctx: click.Context, transport: str, host: str, port: int) -> None:
 @click.pass_context
 def api(ctx: click.Context, host: str, port: int) -> None:
     """Start the REST API server."""
-    from archivist.server.api import create_app
-
     import uvicorn
+
+    from archivist.server.api import create_app
 
     config_dir: Path = ctx.obj["config_dir"]
     global_config = ctx.obj["global_config"]
@@ -336,7 +337,10 @@ def api(ctx: click.Context, host: str, port: int) -> None:
 
     console.print(f"Starting REST API at http://{host}:{port}")
     if host == "0.0.0.0":
-        console.print("[yellow]Warning: Binding to all interfaces. Ensure ARCHIVIST_API_TOKEN is set.[/yellow]")
+        console.print(
+            "[yellow]Warning: Binding to all interfaces."
+            " Ensure ARCHIVIST_API_TOKEN is set.[/yellow]"
+        )
 
     uvicorn.run(app, host=host, port=port)
 

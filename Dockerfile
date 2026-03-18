@@ -5,7 +5,7 @@ FROM python:3.12-slim AS builder
 WORKDIR /build
 
 # Install build dependencies
-RUN pip install --no-cache-dir hatchling
+RUN pip install --no-cache-dir setuptools wheel
 
 # Copy project files
 COPY pyproject.toml .

@@ -10,7 +10,6 @@ import yaml
 from archivist.config import (
     CorpusConfig,
     DefaultsConfig,
-    GlobalConfig,
     SourceConfig,
     load_all_corpora,
     load_corpus_config,

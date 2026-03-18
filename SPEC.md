@@ -250,7 +250,7 @@ class DocumentContent:
 ### 5.5 Adapter: Documents
 
 - Scans local directory for files matching `extensions`
-- Extracts text: PDF (pymupdf), DOCX (python-docx), TXT/MD (direct read)
+- Extracts text: PDF (pymupdf), TXT/MD (direct read). DOCX support planned (not yet implemented)
 - Optionally copies originals to corpus `media/` directory
 - Watches for new files on re-sync
 
@@ -462,7 +462,6 @@ Get detailed status for a specific corpus.
 ```
 GET  /api/v1/corpora                          # List all corpora
 GET  /api/v1/corpora/{slug}                   # Corpus details
-GET  /api/v1/corpora/{slug}/documents         # List documents in corpus
 POST /api/v1/search                           # Search (body: {query, corpus?, n?})
 GET  /api/v1/health                           # Health check
 ```
@@ -619,22 +618,19 @@ archivist/
 │           └── logging.py       # Logging setup
 ├── tests/
 │   ├── conftest.py
-│   ├── test_config.py
+│   ├── conftest.py
 │   ├── test_chunker.py
+│   ├── test_cli.py
+│   ├── test_config.py
+│   ├── test_document_adapter.py
 │   ├── test_extractors.py
 │   ├── test_podcast_adapter.py
 │   ├── test_web_adapter.py
-│   ├── test_document_adapter.py
-│   ├── test_chromadb_store.py
-│   ├── test_pipeline.py
-│   ├── test_cli.py
-│   ├── test_mcp_server.py
-│   ├── test_api.py
 │   └── fixtures/
+│       ├── sample_config.yaml
+│       ├── sample_corpus.yaml
 │       ├── sample_feed.xml
-│       ├── sample_page.html
-│       ├── sample.pdf
-│       └── sample_config.yaml
+│       └── sample_page.html
 └── docs/
     └── examples/
         ├── podcast-corpus.yaml
