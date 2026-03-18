@@ -1,0 +1,18 @@
+# Example: Web corpus with crawl depth
+#
+# Crawls a website starting from the seed URL, following links up to
+# the specified depth. Only follows links on the same domain.
+
+name: Documentation Archive
+description: Crawled copy of project documentation
+
+sources:
+  - type: web
+    url: https://docs.example.com/
+    crawl_depth: 3
+    include_patterns:
+      - "/docs/"          # Only crawl pages under /docs/
+    exclude_patterns:
+      - "/api/v[0-9]"    # Skip versioned API references
+    archive_media: false
+    request_delay: 1.0

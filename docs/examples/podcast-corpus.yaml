@@ -1,0 +1,15 @@
+# Example: Podcast corpus with transcript fetching
+#
+# This corpus fetches pre-existing transcripts from a known URL pattern.
+# Use transcript_mode: whisper to generate transcripts from audio instead.
+
+name: Tech Podcast Archive
+description: Archive of a tech podcast with publicly available transcripts
+
+sources:
+  - type: podcast
+    url: https://example.com/podcast/feed.xml
+    transcript_mode: fetch
+    transcript_url_pattern: "https://example.com/transcripts/ep-{episode}.txt"
+    archive_media: false    # Don't keep audio files
+    request_delay: 1.5      # Be polite to the server

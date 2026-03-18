@@ -1,0 +1,13 @@
+name: Test Corpus
+description: A test corpus for unit tests
+slug: test-corpus
+
+sources:
+  - type: podcast
+    url: https://example.com/feed.xml
+    transcript_mode: fetch
+    transcript_url_pattern: "https://example.com/transcripts/ep-{episode}.txt"
+    archive_media: false
+
+chunk_size: 1600
+chunk_overlap: 200

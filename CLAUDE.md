@@ -1,50 +1,55 @@
 # Archivist
 
-A generalized corpus-building tool — codifies the process pioneered in SNaI (podcast transcript
-download → transcript processing → embedding for semantic search/RAG) so it can be reused across
-future projects.
-
-## Motivation
-
-SNaI required a multi-step pipeline to build a searchable corpus from a podcast feed:
-1. Define the source (RSS feed, YouTube channel, web archive, etc.)
-2. Download/scrape the source content
-3. Generate or fetch transcripts where needed
-4. Clean and chunk the text
-5. Generate embeddings and store in a vector store
-6. Expose a search/RAG interface (MCP server, API, etc.)
-
-Archivist should make this pipeline reproducible for any content source with minimal configuration.
-
-## Goals
-
-- Source adapters: podcast (RSS), YouTube, web pages, document collections
-- Transcript generation: Whisper for audio, extraction for HTML/PDF
-- Configurable chunking and overlap strategies
-- Pluggable vector backends (local ChromaDB, Pinecone, CF Vectorize, etc.)
-- Output: MCP server for semantic search + optional REST API
-- CLI-first; Docker for deployment
-
-## Relationship to SNaI
-
-SNaI is the first use case. Once Archivist exists, the SNaI pipeline should be refactored to use it
-as a dependency rather than maintaining its own ad hoc scripts.
+A self-hosted corpus-building tool for semantic search and RAG.
 
 ## Status
 
-**Design phase.** No code written yet. Begin implementation after SNaI embedding is unblocked.
+**v0.1.0** — Core implementation complete. All source adapters, processing pipeline, vector store,
+CLI, MCP server, and REST API are functional.
 
-## Tech Stack (Proposed)
+## Tech Stack
 
-- Python 3.12 (consistent with SNaI)
-- Whisper (OpenAI) for audio transcription
-- ChromaDB or CF Vectorize for embeddings
-- FastAPI for the REST/MCP layer
-- Docker for packaging
+- Python 3.12, strict mypy, ruff linting
+- Click (CLI), ChromaDB (vectors), sentence-transformers (embeddings)
+- FastAPI (REST API), MCP Python SDK (MCP server)
+- feedparser (RSS), httpx + BeautifulSoup (web), pymupdf (PDF)
+- pytest for testing
 
-## Next Steps
+## Development
 
-1. Write SPEC.md with full requirements and architecture
-2. Define source adapter interface (abstract base class)
-3. Implement podcast/RSS adapter first (extract from SNaI's download-transcripts.sh)
-4. Wire up to embedding pipeline
+```bash
+# Setup
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Type checking
+mypy src/
+
+# Linting
+ruff check src/ tests/
+```
+
+## Architecture
+
+Config-driven corpus builder with pluggable source adapters:
+
+```
+~/.archivist/config.yaml          → Global settings
+~/.archivist/corpora/<name>.yaml  → Per-corpus source definitions
+```
+
+Pipeline: discover → fetch → extract → chunk → embed → store → search
+
+Source types: `podcast`, `web`, `documents`
+
+## Conventions
+
+- Conventional commits (feat:, fix:, chore:, etc.)
+- Type hints everywhere, strict mypy
+- Tests for all new functionality
+- Keep modules focused — one purpose per file
+- See SPEC.md for full specification

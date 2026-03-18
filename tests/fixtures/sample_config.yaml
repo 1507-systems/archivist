@@ -1,0 +1,10 @@
+data_dir: /tmp/archivist-test-data
+
+defaults:
+  chunk_size: 3200
+  chunk_overlap: 400
+  embedding_model: all-mpnet-base-v2
+  vector_backend: chromadb
+
+logging:
+  level: DEBUG

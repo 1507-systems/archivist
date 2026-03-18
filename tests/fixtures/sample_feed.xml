@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Test Podcast</title>
+    <link>https://example.com/podcast</link>
+    <description>A test podcast feed for Archivist unit tests</description>
+    <item>
+      <title>Episode 3 - The Third One</title>
+      <link>https://example.com/podcast/ep3</link>
+      <itunes:episode>3</itunes:episode>
+      <enclosure url="https://example.com/audio/ep3.mp3" type="audio/mpeg" length="1024000"/>
+      <pubDate>Wed, 15 Jan 2025 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Episode 2 - The Sequel</title>
+      <link>https://example.com/podcast/ep2</link>
+      <itunes:episode>2</itunes:episode>
+      <enclosure url="https://example.com/audio/ep2.mp3" type="audio/mpeg" length="512000"/>
+      <pubDate>Wed, 08 Jan 2025 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Episode 1 - Pilot</title>
+      <link>https://example.com/podcast/ep1</link>
+      <itunes:episode>1</itunes:episode>
+      <enclosure url="https://example.com/audio/ep1.mp3" type="audio/mpeg" length="256000"/>
+      <pubDate>Wed, 01 Jan 2025 12:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

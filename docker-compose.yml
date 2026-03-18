@@ -1,0 +1,28 @@
+services:
+  # MCP server over SSE (for remote Claude Desktop access)
+  archivist:
+    build: .
+    volumes:
+      - ./config:/root/.archivist    # Mount your config directory
+      - archivist-data:/data         # Persist corpus data
+    environment:
+      - ARCHIVIST_DATA_DIR=/data
+    ports:
+      - "8091:8091"
+    command: serve --transport sse --host 0.0.0.0 --port 8091
+
+  # REST API (optional, for network access)
+  api:
+    build: .
+    volumes:
+      - ./config:/root/.archivist
+      - archivist-data:/data
+    environment:
+      - ARCHIVIST_DATA_DIR=/data
+      - ARCHIVIST_API_TOKEN=${ARCHIVIST_API_TOKEN:-}
+    ports:
+      - "8090:8090"
+    command: api --host 0.0.0.0 --port 8090
+
+volumes:
+  archivist-data:

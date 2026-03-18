@@ -1,0 +1,17 @@
+# Example: Local document corpus
+#
+# Scans a local directory for documents and extracts text from each.
+# Supports PDF, TXT, MD, and DOCX files.
+
+name: Research Papers
+description: Collection of research papers and notes
+
+sources:
+  - type: documents
+    path: ~/Documents/research-papers
+    extensions:
+      - .pdf
+      - .txt
+      - .md
+    recursive: true         # Include subdirectories
+    archive_media: false    # Don't copy originals to data dir

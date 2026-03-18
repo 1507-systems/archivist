@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page - Archivist Fixtures</title>
+    <style>body { font-family: sans-serif; }</style>
+    <script>console.log("this should be stripped");</script>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+    </nav>
+    <main>
+        <h1>Welcome to the Test Page</h1>
+        <p>This is the first paragraph of content that should be extracted by the HTML-to-text processor.</p>
+        <p>This is the second paragraph. It contains <strong>bold text</strong> and <em>italic text</em>.</p>
+        <h2>Section Two</h2>
+        <p>Here is some more content in a second section. This paragraph is longer to test chunking behavior when text needs to be split across multiple chunks for embedding purposes.</p>
+        <ul>
+            <li>List item one</li>
+            <li>List item two</li>
+            <li>List item three</li>
+        </ul>
+    </main>
+    <footer>
+        <p>Footer content that might be stripped by smart extractors</p>
+    </footer>
+</body>
+</html>
