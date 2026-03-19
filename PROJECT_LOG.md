@@ -86,6 +86,18 @@ Ran full audit cycle (docs, functionality, cleanup, security) with zero remainin
 ### Next steps
 - End-to-end testing with real corpus (SNaI as first target)
 - Whisper integration testing
-- CI/CD setup (GitHub Actions)
 - PyPI publishing
 - DOCX support (python-docx extractor)
+
+---
+
+## 2026-03-18: CI/CD Pipeline
+
+### What was done
+- Added GitHub Actions CI/CD pipeline (commit 2d69368)
+- Workflow runs: pytest, mypy --strict, ruff check
+- Triggered on push to main and pull requests
+
+### Updated next steps
+- CI/CD setup: **done**
+- Remaining: end-to-end testing, Whisper integration, PyPI publishing, DOCX support
