@@ -1,5 +1,21 @@
 # Archivist — Project Log
 
+## 2026-03-22: Branch Protection Enabled
+
+### What was done
+- Enabled GitHub branch protection on `main` branch via API
+- Configuration:
+  - Strict status checks: enabled (no required contexts — relies on CI/CD pipeline already in place)
+  - Enforce admins: disabled
+  - Required pull request reviews: 0 (can be adjusted later if needed)
+  - No restrictions on force pushes/deletions (can be adjusted later)
+
+### Status
+- Branch protection is now active on 1507-systems/archivist
+- CI/CD pipeline (pytest, mypy, ruff) already in place and will execute on PRs
+
+---
+
 ## 2026-03-18: Full Audit — v0.1.0-audit-clean
 
 ### Audit results
