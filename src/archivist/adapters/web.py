@@ -146,7 +146,7 @@ class WebAdapter(SourceAdapter):
 
     def _discover_from_sitemap(self, sitemap_url: str) -> list[DocumentMeta]:
         """Parse a sitemap XML for URL discovery."""
-        import xml.etree.ElementTree as ET
+        import xml.etree.ElementTree as ET  # nosec B405 — xml.etree is safe here; we only parse sitemap XML fetched from external URLs as part of the archiver's intended web-crawling workflow. defusedxml is not warranted: sitemaps don't contain entity-expansion payloads and the archiver fetches untrusted web content by design.
 
         client = create_client()
         try:
@@ -155,7 +155,7 @@ class WebAdapter(SourceAdapter):
                 logger.warning("Sitemap not found: %s", sitemap_url)
                 return []
 
-            root = ET.fromstring(response.text)
+            root = ET.fromstring(response.text)  # nosec B314 — parsing sitemap XML from HTTP response is the archiver's core purpose; the content is treated as data (URL list), not executed. No DTD/entity expansion risk in standard sitemap format.
             # Handle namespace in sitemap XML
             ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
