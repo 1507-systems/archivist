@@ -1,3 +1,4 @@
+<!-- summary: Self-hosted corpus-building tool for semantic search and RAG with multi-source ingestion, local embeddings, and ChromaDB vector store. -->
 # Archivist — Project Log
 
 ## 2026-03-22: Branch Protection Enabled
