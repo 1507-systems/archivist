@@ -1,6 +1,31 @@
 <!-- summary: Self-hosted corpus-building tool for semantic search and RAG with multi-source ingestion, local embeddings, and ChromaDB vector store. -->
 # Archivist — Project Log
 
+## 2026-03-27: Re-Audit — v0.2.0-audit-clean
+
+### Audit scope
+8 commits since v0.1.0-audit-clean (CI/CD pipeline, docs updates, bandit suppression).
+
+### Checks performed
+1. **Git status**: Clean, on main, up to date with origin
+2. **Tests**: 69/69 passing (pytest -x -q)
+3. **Bandit -r src/**: 1 Medium (B104 — `0.0.0.0` comparison in warning logic, not actual bind), 2 Low (B110 — try/except/pass for optional stats). No High/Critical.
+4. **Shell scripts**: None in project (no shellcheck needed)
+5. **Hardcoded secrets**: None found. API token loaded from `ARCHIVIST_API_TOKEN` env var.
+6. **TODO/FIXME/HACK**: None
+7. **PROJECT_LOG.md**: Up to date
+
+### Observations (informational, not blocking)
+- Token comparison in `api.py:89` uses `!=` instead of `hmac.compare_digest()`. Low severity for a local-only tool; would matter if exposed publicly.
+- Bandit B104/B110 findings are expected and documented above.
+
+### Final state
+- 69/69 tests passing
+- No new security issues
+- Tagged v0.2.0-audit-clean
+
+---
+
 ## 2026-03-22: Branch Protection Enabled
 
 ### What was done
